@@ -1,0 +1,26 @@
+<settings>
+  <profiles>
+    <profile>
+      <id>${Redhat_Repo_Name}</id>
+      <repositories>
+        <repository>
+          <id>${Redhat_Repo_Name}</id>
+          <url>${Redhat_Repo_URL}</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>${Redhat_Repo_Name}</id>
+          <url>${Redhat_Repo_URL}</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>false</enabled></snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>${Redhat_Repo_Name}</activeProfile>
+  </activeProfiles>
+</settings>

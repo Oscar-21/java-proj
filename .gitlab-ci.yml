@@ -1,0 +1,36 @@
+stages:
+  - build
+  - run
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .m2/repository/
+
+build:
+  stage: build
+  image: maven:3.9-eclipse-temurin-21
+  script:
+    - mvn $MAVEN_CLI_OPTS -s .mvn/ci-settings.xml clean package -DskipTests
+  artifacts:
+    paths:
+      - target/quarkus-app/
+    expire_in: 1 day
+
+sync:
+  stage: run
+  image: eclipse-temurin:21-jre
+  needs:
+    - job: build
+      artifacts: true
+  #variables:
+  #  GITLAB_PROJECT_ID: "$CI_PROJECT_ID"   # remap built-in to Quarkus name
+  script:
+    - java -jar target/quarkus-app/quarkus-run.jar fooobaaaaar.txt
+  #rules:
+  #  - if: $CI_PIPELINE_SOURCE == "schedule"
+  #  - if: $CI_PIPELINE_SOURCE == "web"
