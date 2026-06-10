@@ -31,6 +31,9 @@ sync:
   #  GITLAB_PROJECT_ID: "$CI_PROJECT_ID"   # remap built-in to Quarkus name
   script:
     - java -jar target/quarkus-app/quarkus-run.jar fooobaaaaar.txt
-  #rules:
-  #  - if: $CI_PIPELINE_SOURCE == "schedule"
-  #  - if: $CI_PIPELINE_SOURCE == "web"
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+    - when: never
